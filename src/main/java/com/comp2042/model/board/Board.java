@@ -1,8 +1,7 @@
 package com.comp2042.model.board;
 
-import com.comp2042.model.ClearRow;
-import com.comp2042.model.Score;
-import com.comp2042.model.ViewData;
+import com.comp2042.model.game.data.ClearRow;
+import com.comp2042.model.game.data.Score;
 
 public interface Board {
 

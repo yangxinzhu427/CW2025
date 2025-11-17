@@ -1,4 +1,6 @@
-package com.comp2042.model;
+package com.comp2042.model.board;
+
+import com.comp2042.model.game.data.MatrixOperations;
 
 public final class ViewData {
 

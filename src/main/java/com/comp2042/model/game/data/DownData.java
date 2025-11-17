@@ -1,4 +1,6 @@
-package com.comp2042.model;
+package com.comp2042.model.game.data;
+
+import com.comp2042.model.board.ViewData;
 
 public final class DownData {
     private final ClearRow clearRow;

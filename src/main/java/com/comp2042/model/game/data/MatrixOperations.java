@@ -1,4 +1,4 @@
-package com.comp2042.model;
+package com.comp2042.model.game.data;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;

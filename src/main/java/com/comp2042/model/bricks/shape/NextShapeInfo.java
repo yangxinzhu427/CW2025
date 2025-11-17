@@ -1,6 +1,6 @@
 package com.comp2042.model.bricks.shape;
 
-import com.comp2042.model.MatrixOperations;
+import com.comp2042.model.game.data.MatrixOperations;
 
 public final class NextShapeInfo {
 

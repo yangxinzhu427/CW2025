@@ -1,8 +1,8 @@
 package com.comp2042.controller;
 
-import com.comp2042.model.DownData;
+import com.comp2042.model.game.data.DownData;
 import com.comp2042.model.event.MoveEvent;
-import com.comp2042.model.ViewData;
+import com.comp2042.model.board.ViewData;
 
 public interface InputEventListener {
 
