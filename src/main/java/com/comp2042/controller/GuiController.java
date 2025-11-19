@@ -25,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -58,6 +59,9 @@ public class GuiController implements Initializable {
 
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
 
+    @FXML
+    private Text pauseStyle;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
@@ -66,6 +70,13 @@ public class GuiController implements Initializable {
         gamePanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
+
+                if (keyEvent.getCode() == KeyCode.P && isGameOver.getValue() == Boolean.FALSE) {
+                    pauseGame();
+                    keyEvent.consume();
+                    return;
+                }
+
                 if (isPause.getValue() == Boolean.FALSE && isGameOver.getValue() == Boolean.FALSE) {
                     if (keyEvent.getCode() == KeyCode.LEFT || keyEvent.getCode() == KeyCode.A) {
                         refreshBrick(eventListener.onLeftEvent(new MoveEvent(EventType.LEFT, EventSource.USER)));
@@ -90,6 +101,17 @@ public class GuiController implements Initializable {
             }
         });
         gameOverPanel.setVisible(false);
+
+        pauseStyle = new Text("PAUSED");
+        pauseStyle.getStyleClass().add("pauseStyle");
+        pauseStyle.setX(30);
+        pauseStyle.setY(100);
+        pauseStyle.setVisible(false);
+        groupNotification.getChildren().add(pauseStyle);
+
+        Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
+        gamePanel.setFocusTraversable(true);
+        gamePanel.requestFocus();
 
         final Reflection reflection = new Reflection();
         reflection.setFraction(0.8);
@@ -226,7 +248,25 @@ public class GuiController implements Initializable {
         isGameOver.setValue(Boolean.FALSE);
     }
 
-    public void pauseGame(ActionEvent actionEvent) {
-        gamePanel.requestFocus();
+    public void pauseGame() {
+        if (isGameOver.getValue() == Boolean.TRUE) {
+            return;
+        }
+
+        if (isPause.getValue() == Boolean.FALSE) {
+            isPause.setValue(Boolean.TRUE);
+            timeLine.pause();
+            pauseStyle.setVisible(true);
+        } else {
+            isPause.setValue(Boolean.FALSE);
+            timeLine.play();
+            pauseStyle.setVisible(false);
+            gamePanel.requestFocus();
+        }
     }
+    /**public void pauseGame(ActionEvent actionEvent) {
+        gamePanel.requestFocus();
+        isPause.setValue(Boolean.FALSE);
+    }*/
+
 }
