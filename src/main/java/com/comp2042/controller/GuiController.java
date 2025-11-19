@@ -20,11 +20,13 @@ import javafx.scene.Group;
 import javafx.scene.effect.Reflection;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.net.URL;
@@ -53,6 +55,8 @@ public class GuiController implements Initializable {
     private Rectangle[][] rectangles;
 
     private Timeline timeLine;
+
+    private Text scoreText;
 
     private final BooleanProperty isPause = new SimpleBooleanProperty();
 
@@ -90,6 +94,12 @@ public class GuiController implements Initializable {
             }
         });
         gameOverPanel.setVisible(false);
+
+        scoreText = new Text("Score: 0");
+        scoreText.getStyleClass().add("scoreClass");
+        scoreText.setX(218);
+        scoreText.setY(-175);
+        groupNotification.getChildren().add(scoreText);
 
         final Reflection reflection = new Reflection();
         reflection.setFraction(0.8);
@@ -208,6 +218,9 @@ public class GuiController implements Initializable {
     }
 
     public void bindScore(IntegerProperty integerProperty) {
+        scoreText.textProperty().bind(
+                integerProperty.asString("SCORE: %d")
+        );
     }
 
     public void gameOver() {
