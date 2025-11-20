@@ -55,6 +55,8 @@ public class GuiController implements Initializable {
 
     private Timeline timeLine;
 
+    private Text scoreText;
+
     private final BooleanProperty isPause = new SimpleBooleanProperty();
 
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
@@ -112,6 +114,12 @@ public class GuiController implements Initializable {
         Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
         gamePanel.setFocusTraversable(true);
         gamePanel.requestFocus();
+
+        scoreText = new Text("Score: 0");
+        scoreText.getStyleClass().add("scoreClass");
+        scoreText.setX(218);
+        scoreText.setY(-175);
+        groupNotification.getChildren().add(scoreText);
 
         final Reflection reflection = new Reflection();
         reflection.setFraction(0.8);
@@ -230,6 +238,9 @@ public class GuiController implements Initializable {
     }
 
     public void bindScore(IntegerProperty integerProperty) {
+        scoreText.textProperty().bind(
+                integerProperty.asString("SCORE: %d")
+        );
     }
 
     public void gameOver() {
