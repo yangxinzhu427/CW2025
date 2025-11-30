@@ -27,7 +27,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -61,6 +64,9 @@ public class GuiController implements Initializable {
     @FXML
     private Text scoreText;
 
+    @FXML
+    private Text highScoreText;
+
     private final BooleanProperty isPause = new SimpleBooleanProperty();
 
     private final BooleanProperty isGameOver = new SimpleBooleanProperty();
@@ -69,6 +75,12 @@ public class GuiController implements Initializable {
     private Text pauseStyle;
 
     private Rectangle[][] nextBrickRectangles;
+
+    private static final String HIGHSCORE_FILE = "highscore.txt";
+
+    private int currentHighScore = 0;
+
+    private int finalScore = 0;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -119,7 +131,14 @@ public class GuiController implements Initializable {
             }
         }
 
+        if (highScoreText != null) {
+            highScoreText.setVisible(false);
+        }
+
         gameOverPanel.setVisible(false);
+
+        loadHighScore();
+        HighScoreDisplay();
 
         pauseStyle = new Text("PAUSED");
         pauseStyle.getStyleClass().add("pauseStyle");
@@ -269,6 +288,17 @@ public class GuiController implements Initializable {
 
     public void gameOver() {
         timeLine.stop();
+        updateScore(this.finalScore);
+
+        if (highScoreText != null) {
+            if (gameOverPanel.getChildren().contains(highScoreText) == false) {
+                gameOverPanel.getChildren().add(highScoreText);
+            }
+            highScoreText.setX(50);
+            highScoreText.setY(80);
+            highScoreText.setVisible(true);
+        }
+
         gameOverPanel.setVisible(true);
         isGameOver.setValue(Boolean.TRUE);
     }
@@ -313,6 +343,44 @@ public class GuiController implements Initializable {
                 nextBrickRectangles[i][j].setArcWidth(9);
             }
         }
+    }
+
+    private void loadHighScore() {
+        File file = new File(HIGHSCORE_FILE);
+        if (file.exists()) {
+            try (Scanner scanner = new Scanner(file)) {
+                if (scanner.hasNextInt()) {
+                    currentHighScore = scanner.nextInt();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private void updateScore(int finalScore) {
+        if (finalScore > currentHighScore) {
+            saveHighScore(finalScore);
+            HighScoreDisplay();
+        }
+    }
+
+    private void HighScoreDisplay() {
+        highScoreText.setText("HIGH SCORE: " + currentHighScore);
+    }
+
+    private void saveHighScore(int newScore) {
+        try (FileWriter writer = new FileWriter(HIGHSCORE_FILE)) {
+            writer.write(String.valueOf(newScore));
+            currentHighScore = newScore;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setFinalScore(int score) {
+        this.finalScore = score;
     }
 
 }

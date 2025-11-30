@@ -7,11 +7,13 @@ import com.comp2042.model.board.SimpleBoard;
 import com.comp2042.model.game.data.ClearRow;
 import com.comp2042.model.game.data.DownData;
 import com.comp2042.model.board.ViewData;
+import javafx.beans.property.IntegerProperty;
 
 public class GameController implements InputEventListener {
 
     private Board board = new SimpleBoard(25, 10);
 
+    private IntegerProperty scoreProperty;
     private final GuiController viewGuiController;
 
     public GameController(GuiController c) {
@@ -26,12 +28,15 @@ public class GameController implements InputEventListener {
     public DownData onDownEvent(MoveEvent event) {
         boolean canMove = board.moveBrickDown();
         ClearRow clearRow = null;
+
+        IntegerProperty scoreProp = board.getScore().scoreProperty();
         if (!canMove) {
             board.mergeBrickToBackground();
             clearRow = board.clearRows();
             if (clearRow.getLinesRemoved() > 0) {
                 board.getScore().add(clearRow.getScoreBonus());
             }
+            viewGuiController.setFinalScore(scoreProp.get());
             if (board.createNewBrick()) {
                 viewGuiController.gameOver();
             }
@@ -39,9 +44,9 @@ public class GameController implements InputEventListener {
             viewGuiController.refreshGameBackground(board.getBoardMatrix());
 
         } else {
-            //if (event.getEventSource() == EventSource.USER) {
-                board.getScore().add(1);
-            //}
+            board.getScore().add(1);
+
+            viewGuiController.setFinalScore(scoreProp.get());
         }
         return new DownData(clearRow, board.getViewData());
     }
