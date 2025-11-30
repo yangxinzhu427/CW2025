@@ -133,13 +133,13 @@ public class GuiController implements Initializable {
         gamePanel.requestFocus();
 
         Text nextBrickText = new Text("Next Shape: ");
-        nextBrickText.getStyleClass().add("nextBrickText");
+        nextBrickText.getStyleClass().add("textStyle");
         nextBrickText.setX(218);
         nextBrickText.setY(-120);
         groupNotification.getChildren().add(nextBrickText);
 
         scoreText = new Text("Score: 0");
-        scoreText.getStyleClass().add("scoreClass");
+        scoreText.getStyleClass().add("textStyle");
         scoreText.setX(218);
         scoreText.setY(-175);
         groupNotification.getChildren().add(scoreText);
