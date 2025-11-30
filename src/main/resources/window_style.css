@@ -14,11 +14,18 @@
     -fx-border-radius: 12px;
 }
 
-.nextBrickLabel {
+.nextBrick {
+    -fx-pref-width: 100px;
+    -fx-pref-height: 100px;
+    -fx-border-width: 0px;
+    -fx-padding: 5px;
+    -fx-alignment: right;
+}
+
+.nextBrickText {
     -fx-font-family: "Let's go Digital";
-    -fx-padding: 20px 0 0 0;
-    -fx-font-size: 16px;
-    -fx-text-fill: yellow;
+    -fx-font-size: 20px;
+    -fx-fill: yellow;
 }
 
 .ipad-dark-grey {
