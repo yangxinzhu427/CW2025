@@ -45,6 +45,9 @@ public class GuiController implements Initializable {
     private GridPane brickPanel;
 
     @FXML
+    private GridPane nextBrickPanel;
+
+    @FXML
     private GameOverPanel gameOverPanel;
 
     private Rectangle[][] displayMatrix;
@@ -55,6 +58,7 @@ public class GuiController implements Initializable {
 
     private Timeline timeLine;
 
+    @FXML
     private Text scoreText;
 
     private final BooleanProperty isPause = new SimpleBooleanProperty();
@@ -63,6 +67,8 @@ public class GuiController implements Initializable {
 
     @FXML
     private Text pauseStyle;
+
+    private Rectangle[][] nextBrickRectangles;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -102,6 +108,17 @@ public class GuiController implements Initializable {
                 }
             }
         });
+
+        nextBrickRectangles = new Rectangle[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                Rectangle rectangle = new Rectangle(BRICK_SIZE, BRICK_SIZE);
+                rectangle.setFill(Color.TRANSPARENT);
+                nextBrickRectangles[i][j] = rectangle;
+                nextBrickPanel.add(rectangle, j, i);
+            }
+        }
+
         gameOverPanel.setVisible(false);
 
         pauseStyle = new Text("PAUSED");
@@ -114,6 +131,12 @@ public class GuiController implements Initializable {
         Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
         gamePanel.setFocusTraversable(true);
         gamePanel.requestFocus();
+
+        Text nextBrickText = new Text("Next Shape: ");
+        nextBrickText.getStyleClass().add("nextBrickText");
+        nextBrickText.setX(218);
+        nextBrickText.setY(-120);
+        groupNotification.getChildren().add(nextBrickText);
 
         scoreText = new Text("Score: 0");
         scoreText.getStyleClass().add("scoreClass");
@@ -203,6 +226,7 @@ public class GuiController implements Initializable {
                     setRectangleData(brick.getBrickData()[i][j], rectangles[i][j]);
                 }
             }
+            updateNextBrick(brick);
         }
     }
 
@@ -275,9 +299,20 @@ public class GuiController implements Initializable {
             gamePanel.requestFocus();
         }
     }
-    /**public void pauseGame(ActionEvent actionEvent) {
-        gamePanel.requestFocus();
-        isPause.setValue(Boolean.FALSE);
-    }*/
+
+    private void updateNextBrick(ViewData brick) {
+        int[][] nextBrickData = brick.getNextBrickData();
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                if (i < nextBrickData.length && j < nextBrickData[i].length) {
+                    nextBrickRectangles[i][j].setFill(getFillColor(nextBrickData[i][j]));
+                } else {
+                    nextBrickRectangles[i][j].setFill(Color.TRANSPARENT);
+                }
+                nextBrickRectangles[i][j].setArcHeight(9);
+                nextBrickRectangles[i][j].setArcWidth(9);
+            }
+        }
+    }
 
 }
