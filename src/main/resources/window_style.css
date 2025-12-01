@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Let's go Digital";
+    src: url("digital.ttf");
+}
+
 .root {
     -fx-background-image: url("background_image.png");
 }
@@ -80,7 +85,7 @@
 
 .buttonStyle {
     -fx-font-family: "Let's go Digital";
-    -fx-font-size: 38;
+    -fx-font-size: 30;
     -fx-fill: #61a2b1;
     -fx-text-fill: #61a2b1;
 

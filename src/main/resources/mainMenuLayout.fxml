@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+<VBox fx:controller="com.comp2042.controller.MainMenuController"
+      xmlns:fx="http://javafx.com/fxml/1"
+      alignment="CENTER"
+      spacing="20"
+      styleClass="ipad-dark-grey"
+      maxHeight="510" maxWidth="350" minHeight="510" minWidth="350">
+
+    <padding>
+        <Insets top="50" right="50" bottom="50" left="50"/>
+    </padding>
+
+    <Text text="TETRIS" styleClass="pauseStyle" />
+
+    <VBox spacing="10" alignment="CENTER">
+        <Button text="Start Game" onAction="#startGame" styleClass="buttonStyle" prefWidth="200"/>
+    </VBox>
+
+    <?import javafx.geometry.Insets?>
+    <?import javafx.scene.text.Text?>
+
+    <stylesheets>
+        <URL value="@window_style.css"/>
+    </stylesheets>
+</VBox>
