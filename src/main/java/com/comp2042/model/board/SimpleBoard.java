@@ -87,6 +87,11 @@ public class SimpleBoard implements Board {
     }
 
     @Override
+    public void hardDrop() {
+        while (moveBrickDown()) {}
+    }
+
+    @Override
     public boolean createNewBrick() {
         Brick currentBrick = brickGenerator.getBrick();
         brickRotator.setBrick(currentBrick);
