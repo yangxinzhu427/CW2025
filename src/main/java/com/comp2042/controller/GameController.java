@@ -1,6 +1,5 @@
 package com.comp2042.controller;
 
-import com.comp2042.model.event.EventSource;
 import com.comp2042.model.event.MoveEvent;
 import com.comp2042.model.board.Board;
 import com.comp2042.model.board.SimpleBoard;
@@ -8,6 +7,9 @@ import com.comp2042.model.game.data.ClearRow;
 import com.comp2042.model.game.data.DownData;
 import com.comp2042.model.board.ViewData;
 import javafx.beans.property.IntegerProperty;
+
+import static com.comp2042.model.game.data.Level.LEVEL_UP_SCORE;
+import static com.comp2042.model.game.data.Level.MAX_LEVEL;
 
 public class GameController implements InputEventListener {
 
@@ -22,6 +24,7 @@ public class GameController implements InputEventListener {
         viewGuiController.setEventListener(this);
         viewGuiController.initGameView(board.getBoardMatrix(), board.getViewData());
         viewGuiController.bindScore(board.getScore().scoreProperty());
+        viewGuiController.bindLevel(board.getLevel().levelProperty());
     }
 
     @Override
@@ -48,6 +51,7 @@ public class GameController implements InputEventListener {
 
             viewGuiController.setFinalScore(scoreProp.get());
         }
+        checkAndAdvanceLevel();
         return new DownData(clearRow, board.getViewData());
     }
 
@@ -87,7 +91,30 @@ public class GameController implements InputEventListener {
             viewGuiController.gameOver();
         }
         viewGuiController.refreshGameBackground(board.getBoardMatrix());
+        checkAndAdvanceLevel();
         return new DownData(clearRow, board.getViewData());
+    }
+
+    private void checkAndAdvanceLevel() {
+        if (board.getLevel().getLevel() > MAX_LEVEL) {
+            viewGuiController.completeLevels();
+            return;
+        }
+        int score = board.getScore().scoreProperty().get();
+        int targetScore = LEVEL_UP_SCORE[board.getLevel().getLevel()-1];
+        if (board.getLevel().getLevel() <= MAX_LEVEL && score >= targetScore) {
+            board.getLevel().nextLevel();
+
+            if (board.getLevel().getLevel() > MAX_LEVEL) {
+                board.getLevel().setLevel(MAX_LEVEL);
+                viewGuiController.completeLevels();
+                return;
+            }
+
+            board.nextGame();
+            viewGuiController.refreshGameBackground(board.getBoardMatrix());
+            viewGuiController.updateGameSpeed(board.getLevel().getLevel()-1);
+        }
     }
 
 

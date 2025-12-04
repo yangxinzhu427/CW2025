@@ -8,6 +8,7 @@ import com.comp2042.model.bricks.shape.NextShapeInfo;
 import com.comp2042.model.bricks.shape.RandomBrickGenerator;
 import com.comp2042.model.game.data.ClearRow;
 import com.comp2042.model.game.data.Score;
+import com.comp2042.model.game.data.Level;
 
 import java.awt.*;
 
@@ -20,14 +21,16 @@ public class SimpleBoard implements Board {
     private int[][] currentGameMatrix;
     private Point currentOffset;
     private final Score score;
+    private final Level level;
 
-    public SimpleBoard(int width, int height) {
+    public SimpleBoard(int height, int width) {
         this.width = width;
         this.height = height;
-        currentGameMatrix = new int[width][height];
+        currentGameMatrix = new int[height][width];
         brickGenerator = new RandomBrickGenerator();
         brickRotator = new BrickRotator();
         score = new Score();
+        level = new Level();
     }
 
     @Override
@@ -95,7 +98,8 @@ public class SimpleBoard implements Board {
     public boolean createNewBrick() {
         Brick currentBrick = brickGenerator.getBrick();
         brickRotator.setBrick(currentBrick);
-        currentOffset = new Point(4, 10);
+        //currentOffset = new Point(4, 10);
+        currentOffset = new Point((width-currentBrick.getShapeMatrix().get(0).length) / 2, 0);
         return MatrixOperations.intersect(currentGameMatrix, brickRotator.getCurrentShape(), (int) currentOffset.getX(), (int) currentOffset.getY());
     }
 
@@ -130,8 +134,19 @@ public class SimpleBoard implements Board {
 
     @Override
     public void newGame() {
-        currentGameMatrix = new int[width][height];
+        currentGameMatrix = new int[height][width];
         score.reset();
+        createNewBrick();
+    }
+
+    @Override
+    public Level getLevel() {
+        return level;
+    }
+
+    @Override
+    public void nextGame() {
+        currentGameMatrix = new int[height][width];
         createNewBrick();
     }
 }
