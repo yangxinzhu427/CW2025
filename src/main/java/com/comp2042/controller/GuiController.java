@@ -33,6 +33,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.net.URL;
 import java.util.ResourceBundle;
+import com.comp2042.model.game.data.Level;
+import com.comp2042.panel.CongratulationsPanel;
 
 public class GuiController implements Initializable {
 
@@ -66,6 +68,12 @@ public class GuiController implements Initializable {
 
     @FXML
     private Text highScoreText;
+
+    @FXML
+    private Text levelText;
+
+    @FXML
+    private CongratulationsPanel congratulationsPanel;
 
     private final BooleanProperty isPause = new SimpleBooleanProperty();
 
@@ -140,6 +148,7 @@ public class GuiController implements Initializable {
         }
 
         gameOverPanel.setVisible(false);
+        congratulationsPanel.setVisible(false);
 
         loadHighScore();
         HighScoreDisplay();
@@ -157,15 +166,21 @@ public class GuiController implements Initializable {
 
         Text nextBrickText = new Text("Next Shape: ");
         nextBrickText.getStyleClass().add("textStyle");
-        nextBrickText.setX(218);
-        nextBrickText.setY(-120);
+        nextBrickText.setX(220);
+        nextBrickText.setY(-70);
         groupNotification.getChildren().add(nextBrickText);
 
         scoreText = new Text("Score: 0");
         scoreText.getStyleClass().add("textStyle");
-        scoreText.setX(218);
-        scoreText.setY(-175);
+        scoreText.setX(220);
+        scoreText.setY(-140);
         groupNotification.getChildren().add(scoreText);
+
+        levelText = new Text("LEVEL: 1");
+        levelText.getStyleClass().add("textStyle");
+        levelText.setX(220);
+        levelText.setY(40);
+        groupNotification.getChildren().add(levelText);
 
         final Reflection reflection = new Reflection();
         reflection.setFraction(0.8);
@@ -196,13 +211,7 @@ public class GuiController implements Initializable {
         brickPanel.setLayoutX(gamePanel.getLayoutX() + brick.getxPosition() * brickPanel.getVgap() + brick.getxPosition() * BRICK_SIZE);
         brickPanel.setLayoutY(-42 + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
 
-
-        timeLine = new Timeline(new KeyFrame(
-                Duration.millis(400),
-                ae -> moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD))
-        ));
-        timeLine.setCycleCount(Timeline.INDEFINITE);
-        timeLine.play();
+        updateGameSpeed(1);
     }
 
     private Paint getFillColor(int i) {
@@ -400,4 +409,41 @@ public class GuiController implements Initializable {
         this.finalScore = score;
     }
 
+        public void bindLevel(IntegerProperty integerProperty) {
+            levelText.textProperty().bind(
+                    integerProperty.asString("LEVEL: %d")
+            );
+        }
+
+        public void completeLevels() {
+            timeLine.stop();
+            updateScore(this.finalScore);
+            if (highScoreText != null) {
+                if (gameOverPanel.getChildren().contains(highScoreText) == false) {
+                    gameOverPanel.getChildren().add(highScoreText);
+                }
+                highScoreText.setX(50);
+                highScoreText.setY(80);
+                highScoreText.setVisible(true);
+            }
+            congratulationsPanel.setVisible(true);
+            isGameOver.setValue(Boolean.TRUE);
+        }
+
+    public void updateGameSpeed(int level) {
+        brickPanel.setVisible(false);
+        if( timeLine != null ){
+            timeLine.stop();
+            timeLine.getKeyFrames().clear();
+        }
+        timeLine = new Timeline(new KeyFrame(
+                Duration.millis(Level.LEVEL_SPEEDS[level]),
+                ae -> {
+                    moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD));
+                    brickPanel.setVisible(true);
+                }
+        ));
+        timeLine.setCycleCount(Timeline.INDEFINITE);
+        timeLine.play();
+    }
 }

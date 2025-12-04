@@ -6,7 +6,7 @@ import javafx.scene.layout.BorderPane;
 public class CongratulationsPanel extends BorderPane {
 
     public CongratulationsPanel() {
-        final Label congratulationsLabel = new Label("CONGRATULATIONS!\nYOU WIN!");
+        final Label congratulationsLabel = new Label("  YOU WIN!  ");
         congratulationsLabel.getStyleClass().add("gameOverStyle");
         setCenter(congratulationsLabel);
     }

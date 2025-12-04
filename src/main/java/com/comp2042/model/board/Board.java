@@ -1,6 +1,7 @@
 package com.comp2042.model.board;
 
 import com.comp2042.model.game.data.ClearRow;
+import com.comp2042.model.game.data.Level;
 import com.comp2042.model.game.data.Score;
 
 public interface Board {
@@ -28,4 +29,8 @@ public interface Board {
     Score getScore();
 
     void newGame();
+
+    Level getLevel();
+
+    void nextGame();
 }
