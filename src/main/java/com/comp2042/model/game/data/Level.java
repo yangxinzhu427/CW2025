@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Level {
     public static double[] LEVEL_SPEEDS = {400, 300, 200, 150, 100};
 
-    public static final int[] LEVEL_UP_SCORE = {150,400,600,800,1000};
+    public static final int[] LEVEL_UP_SCORE = {200,450,700,1000,1200};
 
     public static final int MAX_LEVEL = LEVEL_UP_SCORE.length;
 

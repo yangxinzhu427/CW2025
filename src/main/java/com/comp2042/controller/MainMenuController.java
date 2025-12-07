@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -44,4 +43,34 @@ public class MainMenuController {
             }
         }
 
+    /**
+     * Loads the instruction panel and display the game tutorial.
+     */
+    @FXML
+    public void showInstructions() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource("instructions.fxml"));
+            Parent instructionRoot = fxmlLoader.load();
+
+            InstructionsController instructionsController = fxmlLoader.getController();
+            instructionsController.setPrimaryStage(primaryStage);
+
+            primaryStage.setScene(new Scene(instructionRoot, 350, 510));
+            primaryStage.setTitle("TetrisJFX - Instructions");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Handles the Exit button click.
+     * Closes the primary stage.
+     */
+    @FXML
+    public void exitGame() {
+        if (primaryStage != null) {
+            primaryStage.close();
+        }
+    }
 }

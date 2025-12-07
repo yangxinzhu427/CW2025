@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -20,10 +17,12 @@
         <Insets top="50" right="50" bottom="50" left="50"/>
     </padding>
 
-    <Text text="TETRIS" styleClass="pauseStyle" />
+    <Text text="TETRIS" styleClass="titleStyle" />
 
     <VBox spacing="10" alignment="CENTER">
         <Button text="Start Game" onAction="#startGame" styleClass="buttonStyle" prefWidth="200"/>
+        <Button text="Tutorial" onAction="#showInstructions" styleClass="buttonStyle" prefWidth="200"/>
+        <Button text="Exit Game" onAction="#exitGame" styleClass="buttonStyle" prefWidth="200"/>
     </VBox>
 
     <?import javafx.geometry.Insets?>

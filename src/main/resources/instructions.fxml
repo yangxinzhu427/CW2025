@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.comp2042.controller.InstructionsController"
+      prefHeight="400.0" prefWidth="600.0">
+
+    <padding>
+        <Insets top="30" right="30" bottom="30" left="30"/>
+    </padding>
+
+    <Text text="INSTRUCTIONS" styleClass="titleStyle" />
+
+    <Separator />
+
+    <VBox spacing="8" alignment="TOP_LEFT" styleClass="helpInfo">
+        <Text text="Controls:" styleClass="helpInfo" />
+        <Text text="  - LEFT/A: Move Left" styleClass="helpInfo" />
+        <Text text="  - RIGHT/D: Move Right" styleClass="helpInfo" />
+        <Text text="  - UP/W: Rotate" styleClass="helpInfo" />
+        <Text text="  - DOWN/S: Soft Drop" styleClass="helpInfo" />
+        <Text text="  - SPACE: Hard Drop" styleClass="helpInfo" />
+        <Text text="  - P: Pause/Unpause" styleClass="helpInfo" />
+        <Text text="  - N: New Game" styleClass="helpInfo" />
+        <Separator />
+
+        <Text text="Area CLear Brick:" styleClass="helpInfo" />
+        <Text text="  - Effect: Clears a 5x5 area around itself when the line is cleared." styleClass="helpInfo" />
+        <Separator />
+        <Text text="Levels:" styleClass="helpInfo" />
+        <Text text="Tetris features a total of 5 levels." styleClass="helpInfo" />
+        <Text text="Below are the minimum score requirements needed to clear each level." styleClass="helpInfo" />
+        <Text text="  - Level 1: 200" styleClass="helpInfo" />
+        <Text text="  - Level 2: 450" styleClass="helpInfo" />
+        <Text text="  - Level 3: 700" styleClass="helpInfo" />
+        <Text text="  - Level 4: 1000" styleClass="helpInfo" />
+        <Text text="  - Level 5: 1200" styleClass="helpInfo" />
+
+    </VBox>
+
+    <VBox spacing="10" alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
+        <Button text="Menu" onAction="#backToMenu" styleClass="buttonStyle" prefWidth="200"/>
+    </VBox>
+
+    <stylesheets>
+        <URL value="@window_style.css"/>
+    </stylesheets>
+</VBox>

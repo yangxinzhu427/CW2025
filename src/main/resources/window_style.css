@@ -76,7 +76,7 @@
     -fx-text-fill: yellow;
 }
 
-.pauseStyle {
+.titleStyle {
     -fx-font-family: "Let's go Digital";
     -fx-font-size: 48;
     -fx-fill: red;
