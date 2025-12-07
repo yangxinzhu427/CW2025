@@ -9,6 +9,10 @@ final class IBrick implements Brick {
 
     private final List<int[][]> brickMatrix = new ArrayList<>();
 
+    /**
+     * Initializes the I Brick.
+     * '1' represents the block color code.
+     */
     public IBrick() {
         brickMatrix.add(new int[][]{
                 {0, 0, 0, 0},
@@ -24,6 +28,10 @@ final class IBrick implements Brick {
         });
     }
 
+    /**
+     * Gets a deep copy of the list including all rotation matrices for this brick shape.
+     * @return a {@code List} of matrices
+     */
     @Override
     public List<int[][]> getShapeMatrix() {
         return MatrixOperations.deepCopyList(brickMatrix);

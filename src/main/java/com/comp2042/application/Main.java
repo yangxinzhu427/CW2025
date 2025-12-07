@@ -1,4 +1,4 @@
-package com.comp2042;
+package com.comp2042.application;
 
 import com.comp2042.controller.MainMenuController;
 import javafx.application.Application;
@@ -10,6 +10,10 @@ import javafx.stage.Stage;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The main entry for Tetris game.
+ * It sets up the primary JavaFX stage and loads the initial main menu layout.
+ */
 public class Main extends Application {
 
     @Override

@@ -7,7 +7,7 @@
 4.Select JDK version in Project and SDKs<br>
 5.In the main menu click Run / Debug Configurations<br>
 6.Click Edit Configurations<br>
-7.Add VM option --module-path "PATH-TO-FX-LIB" --add-modules javafx.controls,javafx.fxml
+7.Add VM option --module-path "PATH-TO-FX-LIB" --add-modules javafx.controls,javafx.fxml --enable-native-access=javafx.graphics
 # Implemented and Working Properly
 # Implemented but Not Working Properly
 # Features Not Implemented
