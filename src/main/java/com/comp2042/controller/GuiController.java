@@ -2,9 +2,10 @@ package com.comp2042.controller;
 
 import com.comp2042.model.event.EventSource;
 import com.comp2042.model.event.EventType;
+import com.comp2042.model.event.InputEventListener;
 import com.comp2042.model.event.MoveEvent;
 import com.comp2042.model.game.data.DownData;
-import com.comp2042.model.board.ViewData;
+import com.comp2042.model.game.data.ViewData;
 import com.comp2042.panel.GameOverPanel;
 import com.comp2042.panel.NotificationPanel;
 import javafx.animation.KeyFrame;
@@ -17,7 +18,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
-import javafx.scene.effect.Reflection;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
@@ -36,6 +36,9 @@ import java.util.ResourceBundle;
 import com.comp2042.model.game.data.Level;
 import com.comp2042.panel.CongratulationsPanel;
 
+/**
+ * Handles GUI, user input, rendering of the board and bricks, game states, and score display.
+ */
 public class GuiController implements Initializable {
 
     private static final int BRICK_SIZE = 20;
@@ -90,12 +93,21 @@ public class GuiController implements Initializable {
 
     private int finalScore = 0;
 
+    /**
+     * Initializes the controller after the FXML has been loaded.
+     * Sets up fonts, keyboard event handlers, next brick panel, and initial UI.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
         gamePanel.setFocusTraversable(true);
         gamePanel.requestFocus();
         gamePanel.setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+            /**
+             * Handles keys for game control including pause, move, hard drop and new game.
+             * @param keyEvent a {@code KeyEvent} object for triggering actions
+             */
             @Override
             public void handle(KeyEvent keyEvent) {
 
@@ -133,6 +145,7 @@ public class GuiController implements Initializable {
             }
         });
 
+        // brick panel initialization
         nextBrickRectangles = new Rectangle[4][4];
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -153,16 +166,13 @@ public class GuiController implements Initializable {
         loadHighScore();
         HighScoreDisplay();
 
+        // text initialization
         pauseStyle = new Text("PAUSED");
         pauseStyle.getStyleClass().add("pauseStyle");
         pauseStyle.setX(30);
         pauseStyle.setY(100);
         pauseStyle.setVisible(false);
         groupNotification.getChildren().add(pauseStyle);
-
-        Font.loadFont(getClass().getClassLoader().getResource("digital.ttf").toExternalForm(), 38);
-        gamePanel.setFocusTraversable(true);
-        gamePanel.requestFocus();
 
         Text nextBrickText = new Text("Next Shape: ");
         nextBrickText.getStyleClass().add("textStyle");
@@ -182,12 +192,14 @@ public class GuiController implements Initializable {
         levelText.setY(40);
         groupNotification.getChildren().add(levelText);
 
-        final Reflection reflection = new Reflection();
-        reflection.setFraction(0.8);
-        reflection.setTopOpacity(0.9);
-        reflection.setTopOffset(-12);
     }
 
+    /**
+     * Sets up the initial game view.
+     * Initializes the display matrices for the board and the current brick.
+     * @param boardMatrix the initial state of the game board matrix
+     * @param brick initial {@code ViewData} object for the first falling brick
+     */
     public void initGameView(int[][] boardMatrix, ViewData brick) {
         displayMatrix = new Rectangle[boardMatrix.length][boardMatrix[0].length];
         for (int i = 2; i < boardMatrix.length; i++) {
@@ -199,6 +211,7 @@ public class GuiController implements Initializable {
             }
         }
 
+        // initialize the display rectangles for the current brick
         rectangles = new Rectangle[brick.getBrickData().length][brick.getBrickData()[0].length];
         for (int i = 0; i < brick.getBrickData().length; i++) {
             for (int j = 0; j < brick.getBrickData()[i].length; j++) {
@@ -211,9 +224,15 @@ public class GuiController implements Initializable {
         brickPanel.setLayoutX(gamePanel.getLayoutX() + brick.getxPosition() * brickPanel.getVgap() + brick.getxPosition() * BRICK_SIZE);
         brickPanel.setLayoutY(-42 + gamePanel.getLayoutY() + brick.getyPosition() * brickPanel.getHgap() + brick.getyPosition() * BRICK_SIZE);
 
+        // start game timer with initial level speed
         updateGameSpeed(1);
     }
 
+    /**
+     * Gets color from javafx paint color.
+     * @param i color code
+     * @return JavaFX {@code Paint} object
+     */
     private Paint getFillColor(int i) {
         Paint returnPaint;
         switch (i) {
@@ -241,6 +260,9 @@ public class GuiController implements Initializable {
             case 7:
                 returnPaint = Color.BURLYWOOD;
                 break;
+            case 8:
+                returnPaint = Color.GREEN;
+                break;
             default:
                 returnPaint = Color.WHITE;
                 break;
@@ -248,7 +270,10 @@ public class GuiController implements Initializable {
         return returnPaint;
     }
 
-
+    /**
+     * Updates the position and appearance of the current brick.
+     * @param brick latest {@code ViewData} object containing brick's shape and position
+     */
     private void refreshBrick(ViewData brick) {
         if (isPause.getValue() == Boolean.FALSE) {
             brickPanel.setLayoutX(gamePanel.getLayoutX() + brick.getxPosition() * brickPanel.getVgap() + brick.getxPosition() * BRICK_SIZE);
@@ -262,6 +287,9 @@ public class GuiController implements Initializable {
         }
     }
 
+    /** Updates the game background.
+     * @param board latest game board matrix.
+     */
     public void refreshGameBackground(int[][] board) {
         for (int i = 2; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
@@ -270,12 +298,21 @@ public class GuiController implements Initializable {
         }
     }
 
+    /**
+     * Sets color and arc for a rectangle.
+     * @param color color code
+     * @param rectangle {@code Rectangle} object to update
+     */
     private void setRectangleData(int color, Rectangle rectangle) {
         rectangle.setFill(getFillColor(color));
         rectangle.setArcHeight(9);
         rectangle.setArcWidth(9);
     }
 
+    /**
+     * Handles soft drop event.
+     * @param event a {@code MoveEvent} object containg source of event
+     */
     private void moveDown(MoveEvent event) {
         if (isPause.getValue() == Boolean.FALSE) {
             DownData downData = eventListener.onDownEvent(event);
@@ -289,16 +326,25 @@ public class GuiController implements Initializable {
         gamePanel.requestFocus();
     }
 
+    /**
+     * Sets eventListener.
+     * @param eventListener a {@code InputEventListener} object handling the game logic
+     */
     public void setEventListener(InputEventListener eventListener) {
         this.eventListener = eventListener;
     }
 
+    /**
+     * Binds score to integer property.
+     * @param integerProperty score property
+     */
     public void bindScore(IntegerProperty integerProperty) {
         scoreText.textProperty().bind(
                 integerProperty.asString("SCORE: %d")
         );
     }
 
+    /** Shows game over panel and stop the game. */
     public void gameOver() {
         timeLine.stop();
         updateScore(this.finalScore);
@@ -316,6 +362,7 @@ public class GuiController implements Initializable {
         isGameOver.setValue(Boolean.TRUE);
     }
 
+    /** Creates a new game.*/
     public void newGame(ActionEvent actionEvent) {
         timeLine.stop();
         gameOverPanel.setVisible(false);
@@ -326,6 +373,7 @@ public class GuiController implements Initializable {
         isGameOver.setValue(Boolean.FALSE);
     }
 
+    /** Pauses game. */
     public void pauseGame() {
         if (isGameOver.getValue() == Boolean.TRUE) {
             return;
@@ -343,6 +391,10 @@ public class GuiController implements Initializable {
         }
     }
 
+    /**
+     * Handles hard drop event.
+     * @param event a {@code MoveEvent} object containing source of event
+     */
     private void hardDrop(MoveEvent event) {
         if (isPause.getValue() == Boolean.FALSE) {
             DownData downData = eventListener.onHardDropEvent(event);
@@ -356,6 +408,10 @@ public class GuiController implements Initializable {
         gamePanel.requestFocus();
     }
 
+    /**
+     * Updates the next brick.
+     * @param brick  latest {@code ViewData} object containing the next brick's shape
+     */
     private void updateNextBrick(ViewData brick) {
         int[][] nextBrickData = brick.getNextBrickData();
         for (int i = 0; i < 4; i++) {
@@ -371,6 +427,7 @@ public class GuiController implements Initializable {
         }
     }
 
+    /** Loads high score to current high score. */
     private void loadHighScore() {
         File file = new File(HIGHSCORE_FILE);
         if (file.exists()) {
@@ -384,7 +441,10 @@ public class GuiController implements Initializable {
         }
     }
 
-
+    /**
+     * Updates high score.
+     * @param finalScore score achieved in the completed game
+     */
     private void updateScore(int finalScore) {
         if (finalScore > currentHighScore) {
             saveHighScore(finalScore);
@@ -392,10 +452,15 @@ public class GuiController implements Initializable {
         }
     }
 
+    /** Displays high score */
     private void HighScoreDisplay() {
         highScoreText.setText("HIGH SCORE: " + currentHighScore);
     }
 
+    /**
+     * Saves high score to an external file.
+     * @param newScore a new high score to save
+     */
     private void saveHighScore(int newScore) {
         try (FileWriter writer = new FileWriter(HIGHSCORE_FILE)) {
             writer.write(String.valueOf(newScore));
@@ -405,31 +470,47 @@ public class GuiController implements Initializable {
         }
     }
 
+    /**
+     * Sets the final score achieved in the game.
+     * @param score the final score
+     */
     public void setFinalScore(int score) {
         this.finalScore = score;
     }
 
-        public void bindLevel(IntegerProperty integerProperty) {
-            levelText.textProperty().bind(
-                    integerProperty.asString("LEVEL: %d")
-            );
-        }
+    /**
+     * Binds level value to integer property.
+     * @param integerProperty level property
+     */
+    public void bindLevel(IntegerProperty integerProperty) {
+        levelText.textProperty().bind(
+                integerProperty.asString("LEVEL: %d")
+        );
+    }
 
-        public void completeLevels() {
-            timeLine.stop();
-            updateScore(this.finalScore);
-            if (highScoreText != null) {
-                if (gameOverPanel.getChildren().contains(highScoreText) == false) {
-                    gameOverPanel.getChildren().add(highScoreText);
-                }
-                highScoreText.setX(50);
-                highScoreText.setY(80);
-                highScoreText.setVisible(true);
+    /**
+     * Shows congratulations panel when all levels are completed.
+     * It also checks and updates the high score.
+     */
+    public void completeLevels() {
+        timeLine.stop();
+        updateScore(this.finalScore);
+        if (highScoreText != null) {
+            if (!gameOverPanel.getChildren().contains(highScoreText)) {
+                gameOverPanel.getChildren().add(highScoreText);
             }
-            congratulationsPanel.setVisible(true);
-            isGameOver.setValue(Boolean.TRUE);
+            highScoreText.setX(50);
+            highScoreText.setY(80);
+            highScoreText.setVisible(true);
         }
+        congratulationsPanel.setVisible(true);
+        isGameOver.setValue(Boolean.TRUE);
+    }
 
+    /**
+     * Stops the current game timer and restart it with a new speed according to the current level.
+     * @param level the current game level
+     */
     public void updateGameSpeed(int level) {
         brickPanel.setVisible(false);
         if( timeLine != null ){
@@ -438,7 +519,7 @@ public class GuiController implements Initializable {
         }
         timeLine = new Timeline(new KeyFrame(
                 Duration.millis(Level.LEVEL_SPEEDS[level]),
-                ae -> {
+                e -> {
                     moveDown(new MoveEvent(EventType.DOWN, EventSource.THREAD));
                     brickPanel.setVisible(true);
                 }

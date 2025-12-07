@@ -1,6 +1,6 @@
 package com.comp2042.controller;
 
-import com.comp2042.Main;
+import com.comp2042.application.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
+/** main menu controller
+ * start main menu */
 public class MainMenuController {
         private Stage primaryStage;
 

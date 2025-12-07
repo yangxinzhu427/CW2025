@@ -14,8 +14,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+/**
+ * Displays score bonuses when lines are cleared.
+ */
 public class NotificationPanel extends BorderPane {
 
+    /**
+     * Constructs the notification panel with the score text.
+     * @param text text to display the score
+     */
     public NotificationPanel(String text) {
         setMinHeight(200);
         setMinWidth(220);
@@ -28,6 +35,11 @@ public class NotificationPanel extends BorderPane {
 
     }
 
+    /**
+     * Plays the animation.
+     * The panel is automatically removed from the UI list when animation is completed.
+     * @param list the {@code ObservableList} of nodes used to remove the panel after the animation
+     */
     public void showScore(ObservableList<Node> list) {
         FadeTransition ft = new FadeTransition(Duration.millis(2000), this);
         TranslateTransition tt = new TranslateTransition(Duration.millis(2500), this);
