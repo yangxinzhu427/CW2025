@@ -168,7 +168,7 @@ public class GuiController implements Initializable {
 
         // text initialization
         pauseStyle = new Text("PAUSED");
-        pauseStyle.getStyleClass().add("pauseStyle");
+        pauseStyle.getStyleClass().add("titleStyle");
         pauseStyle.setX(30);
         pauseStyle.setY(100);
         pauseStyle.setVisible(false);
