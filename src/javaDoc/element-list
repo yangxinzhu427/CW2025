@@ -1,0 +1,8 @@
+com.comp2042.application
+com.comp2042.controller
+com.comp2042.model.board
+com.comp2042.model.bricks
+com.comp2042.model.bricks.shape
+com.comp2042.model.event
+com.comp2042.model.game.data
+com.comp2042.panel
