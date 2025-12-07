@@ -10,16 +10,25 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-/** main menu controller
- * start main menu */
+/**
+ * Handling user interactions in main menu.
+ */
 public class MainMenuController {
         private Stage primaryStage;
 
-        public void setPrimaryStage(Stage stage) {
+    /**
+     * Primary {@code Stage} of application.
+     * Display scenes.
+     * @param stage
+     */
+    public void setPrimaryStage(Stage stage) {
             this.primaryStage = stage;
         }
 
-        @FXML
+    /**
+     * Handles start game event.
+     */
+    @FXML
         public void startGame() {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getClassLoader().getResource("gameLayout.fxml"));
