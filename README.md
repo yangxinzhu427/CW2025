@@ -113,5 +113,9 @@ Changed how rows are added to newRows in checkRemoving().<br>
 8. **ViewData**<br>
 Added isProp() to check whether the falling brick is prop brick or not.<br>
 # Unexpected Problems
-1. Fixed a bug where the block was moved to the right by a small piece at the start of the game.
-2. Fixed the bug that the initial position of the block was in the middle of the entire board.
+1. **Fixed a bug where the brick was moved to the right by a small piece at the start of the game.**
+The initial position of the brick is not centered. After I modified the initial position, falling brick was at the top but did not appear in the center.
+I found that whether the brick is centered is related to the length of the current block.
+So I subtract the block length from the current board width by 2.
+2. **Fixed the bug that the initial position of the brick was in the middle of the entire board.**
+

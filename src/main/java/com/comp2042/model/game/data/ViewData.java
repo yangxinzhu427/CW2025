@@ -24,7 +24,7 @@ public final class ViewData {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.nextBrickData = nextBrickData;
-        this.isProp = false;
+        this.isProp = isProp;
     }
 
     /**

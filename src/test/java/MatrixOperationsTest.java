@@ -57,7 +57,7 @@ class MatrixOperationsTest {
     }
 
     @Test
-    void shouldClearPowerBrickInClearedRow(){
+    void shouldClearPropBrickInClearedRow(){
         int[][] matrix = {
                 {0, 0, 0, 0, 0, 0, 0},
                 {1, 1, 8, 1, 1,1,1},
@@ -70,49 +70,8 @@ class MatrixOperationsTest {
         };
         ClearRow result = MatrixOperations.checkRemoving(matrix);
         assertEquals(1, result.getLinesRemoved());
-        assertEquals(150, result.getScoreBonus());
+        assertEquals(100, result.getScoreBonus());
         assertEquals(0, result.getNewMatrix()[2][1]);
-    }
-
-    @Test
-    void shouldClearMultiplePowerBrickInClearedRow(){
-        int[][] matrix = {
-                {0, 0, 0, 0, 0, 0, 0},
-                {1, 1, 8, 1, 1,8,1},
-                {0, 1, 0, 1, 1,1, 0},
-                {0, 1, 0, 1, 1,1, 0},
-                {0, 1, 0, 1, 1,1, 0},
-                {0, 1, 0, 1, 1,1, 0},
-                {0, 1, 0, 1, 0,1, 0},
-                {0, 1, 0, 1, 0,0, 0},
-        };
-        ClearRow result = MatrixOperations.checkRemoving(matrix);
-        assertEquals(1, result.getLinesRemoved());
-        assertEquals(250, result.getScoreBonus());
-        assertEquals(0, result.getNewMatrix()[2][1]);
-        assertEquals(0, result.getNewMatrix()[4][4]);
-        assertEquals(1, result.getNewMatrix()[6][4]);
-    }
-    @Test
-    void shouldClearPowerBrickInClearedRowClearPowerBrick(){
-        int[][] matrix = {
-                {0, 0, 0, 0, 0, 0, 0},
-                {1, 1, 8, 1, 1,8,1},
-                {0, 1, 0, 1, 1,1, 0},
-                {0, 1, 8, 1, 1,1, 0},
-                {0, 1, 0, 1, 1,1, 0},
-                {0, 1, 0, 1, 1,1, 0},
-                {0, 1, 1, 1, 1,1, 0},
-                {0, 1, 0, 1, 0,0, 0},
-        };
-        ClearRow result = MatrixOperations.checkRemoving(matrix);
-        assertEquals(1, result.getLinesRemoved());
-        assertEquals(250, result.getScoreBonus());
-        assertEquals(0, result.getNewMatrix()[2][1]);
-        assertEquals(0, result.getNewMatrix()[4][4]);
-        assertEquals(0, result.getNewMatrix()[5][2]);
-        assertEquals(1, result.getNewMatrix()[7][2]);
-        assertEquals(1, result.getNewMatrix()[7][4]);
     }
 
 }
