@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * Handling user interactions in main menu.
+ * Handles user interactions in main menu.
  */
 public class MainMenuController {
         private Stage primaryStage;

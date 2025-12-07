@@ -261,7 +261,7 @@ public class GuiController implements Initializable {
                 returnPaint = Color.BURLYWOOD;
                 break;
             case 8:
-                returnPaint = Color.GREEN;
+                returnPaint = Color.PINK;
                 break;
             default:
                 returnPaint = Color.WHITE;
