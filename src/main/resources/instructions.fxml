@@ -15,7 +15,7 @@
         <Insets top="30" right="30" bottom="30" left="30"/>
     </padding>
 
-    <Text text="INSTRUCTIONS" styleClass="titleStyle" />
+    <Text text="TUTORIAL" styleClass="titleStyle" />
 
     <Separator />
 
@@ -31,7 +31,7 @@
         <Separator />
 
         <Text text="Area CLear Brick:" styleClass="helpInfo" />
-        <Text text="  - Effect: Clears a 5x5 area around itself when the line is cleared." styleClass="helpInfo" />
+        <Text text="  - Effect: Clears a area around itself when the line is cleared." styleClass="helpInfo" />
         <Separator />
         <Text text="Levels:" styleClass="helpInfo" />
         <Text text="Tetris features a total of 5 levels." styleClass="helpInfo" />

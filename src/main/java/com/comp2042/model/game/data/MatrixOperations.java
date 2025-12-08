@@ -139,7 +139,6 @@ public class MatrixOperations {
         for (int i = matrix.length - 1; i >= 0; i--) {
             int[] row = newRows.pollLast();
             if (row != null) {
-                //tmp[i] = row;
                 System.arraycopy(row, 0, tmp[i], 0, row.length);
             } else {
                 break;

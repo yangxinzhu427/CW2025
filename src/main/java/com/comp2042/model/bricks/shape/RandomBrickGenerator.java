@@ -56,7 +56,7 @@ public class RandomBrickGenerator implements BrickGenerator {
     public Brick getBrick() {
         if (nextBricks.size() <= 1) {
             nextBricks.add(brickList.get(ThreadLocalRandom.current().nextInt(brickList.size())));
-            if (ThreadLocalRandom.current().nextInt(brickList.size() * 10) == brickList.size()){
+            if (ThreadLocalRandom.current().nextInt(100) < 5){
                 if (true) {
                     int i = ThreadLocalRandom.current().nextInt(propBrickMap.size());
                     nextBricks.add(propBrickMap.values()
