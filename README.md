@@ -44,14 +44,14 @@ When player completed all levels, congratulations panel will be displayed.<br>
 8. **feat: levels in the game.**<br>
 The game advances a level when the score achieved the threshold, and the brick fall speed accelerates.<br>
 9. **feat: area clear brick.**<br>
-A special brick that can clear area around its landing spot when it removed as part of a line clear.<br> 
+A special brick that can clear the area around its landing spot when it removed as part of a line clear.<br> 
 10. **feat: instruction panel.**<br>
 A panel displays tutorial information.<br>
 11. **refractor: packages name.**<br>
 Packages have been restructured to improve readability and maintainability.<br>
 
 # Features Not Implemented
-1. **Mutiple game modes**<br>
+1. **Multiple game modes**<br>
 I didn't develop multiple modes due to time constraints and focus on the standard game loop and prop brick system.<br>
 2. **Ghost bricks**<br>
 
