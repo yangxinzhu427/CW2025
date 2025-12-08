@@ -44,7 +44,7 @@ When player completed all levels, congratulations panel will be displayed.<br>
 8. **feat: levels in the game.**<br>
 The game advances a level when the score achieved the threshold, and the brick fall speed accelerates.<br>
 9. **feat: area clear brick.**<br>
-A special brick that can clear 5x5 area around its landing spot when it removed as part of a line clear.<br> 
+A special brick that can clear area around its landing spot when it removed as part of a line clear.<br> 
 10. **feat: instruction panel.**<br>
 A panel displays tutorial information.<br>
 11. **refractor: packages name.**<br>
